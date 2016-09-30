@@ -20,6 +20,8 @@ string RecurrentLayer<Dtype>::int_to_str(const int t) const {
 template <typename Dtype>
 void RecurrentLayer<Dtype>::LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top) {
+
+
   CHECK_GE(bottom[0]->num_axes(), 2)
       << "bottom[0] must have at least 2 axes -- (#timesteps, #streams, ...)";
   T_ = bottom[0]->shape(0);
@@ -229,7 +231,7 @@ void RecurrentLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
   // Hacky fix for test time... reshare all the shared blobs.
   // TODO: somehow make this work non-hackily.
   if (this->phase_ == TEST) {
-    unrolled_net_->ShareWeightData();
+    unrolled_net_->ShareWeights();
   }
 
   DCHECK_EQ(recur_input_blobs_.size(), recur_output_blobs_.size());
