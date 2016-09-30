@@ -19,7 +19,8 @@ sys.path.insert(0, '.')
 # seed the RNG so we evaluate on the same subset each time
 np.random.seed(seed=0)
 
-from coco_to_hdf5_data import *
+#from coco_to_hdf5_data import *
+home_dir = caffe_dir
 from captioner import Captioner
 
 import caffe

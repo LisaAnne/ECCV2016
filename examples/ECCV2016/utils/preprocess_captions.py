@@ -11,14 +11,18 @@
 
 import sys
 sys.path.append('utils/')
-#try:
-#  from config import *
-#except:
-#  print "It looks like you don't have a config.py file.  Please go to utils, and copy config.example.py to config.py.  Examine the paths in config.example.py and make sure they match up with your environment"
+import re
 from python_utils import *
 import argparse
 import glob
 import pdb
+
+sentence_split_regex = re.compile(r'(\W+)')
+def split_sentence(sentence):
+  sentence = [s.lower() for s in sentence_split_regex.split(sentence.strip()) if len(s.strip()) >0]
+  if sentence[-1] != '.':
+    return sentence
+  return sentence[:-1]
 
 def bird_preprocess(raw_descriptions):
   #takes raw descriptions (*.tsv) and generates json file in the same format as MSCOCO  
@@ -130,4 +134,15 @@ if __name__ == '__main__':
     split = ims.split('/')[-1].split('.txt')[0]
     tag = '%s.%s.fg' %(save_tag, split)
     save_descriptions(descriptions, tag)
+    if 'train' in ims: #make vocab from train set
+      words = [] 
+      for caption in descriptions['annotations']:
+        words.extend(split_sentence(caption['caption']))
+      vocab = set()
+      for word in words:
+        vocab.add(word) 
+      write_txt = open('data/vocab.txt', 'w')
+      for v in list(vocab):
+        write_txt.writelines('%s\n' %v)
+      write_txt.close()
 
