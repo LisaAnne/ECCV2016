@@ -42,7 +42,7 @@ def split_sentence(sentence):
   return sentence[:-1]
  
 def tokenize_text(sentence, vocabulary, leave_out_unks=False):
- sentence = split_sentence(sentence) 
+ sentence = [s.strip() for s in split_sentence(sentence)] 
  token_sent = []
  for w in sentence:
    try:
@@ -478,6 +478,7 @@ class python_data_layer(caffe.Layer):
     for top_index, name in zip(range(len(top)), self.top_names):
       top[top_index].data[...] = self.thread_result[name] 
 
+    pdb.set_trace()
     self.dispatch_worker()
       
   def dispatch_worker(self):

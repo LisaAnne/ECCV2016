@@ -137,8 +137,8 @@ if __name__ == '__main__':
     if 'train' in ims: #make vocab from train set
       words = [] 
       for caption in descriptions['annotations']:
-        words.extend(split_sentence(caption['caption']))
-      vocab = ['<unk>'] + sorted(list(set(words)))
+        words.extend([s.strip() for s in split_sentence(caption['caption'])])
+      vocab = sorted(list(set(words)))
       vocab_file = open('data/vocab.txt', 'w')
       for v in vocab:
         vocab_file.writelines('%s\n' %v)
