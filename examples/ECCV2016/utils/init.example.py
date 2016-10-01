@@ -1,12 +1,13 @@
 import json
 import sys
 
-cub_features = 'data/CUB_feature_dict.p'
+coco_eval_path = PATH_TO_COCO_EVAL_TOOLS 
 
-caffe_dir = '../../'
 sys.path.insert(0, caffe_dir + 'python_layers/')
 pycaffe_path = '../../python/'
-coco_eval_path = '../../data/coco/coco-caption-eval/'
+cub_features = 'data/CUB_feature_dict.p'
+bird_anno_path_fg = 'descriptions/descriptions_bird.%s.fg_%s.json'
+caffe_dir = '../../'
 
 cache_home = 'generated_sentences/'
 

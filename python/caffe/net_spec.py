@@ -23,7 +23,7 @@ from collections import OrderedDict, Counter
 from .proto import caffe_pb2
 from google import protobuf
 import six
-
+import pdb
 
 def param_name_dict():
     """Find out the correspondence between layer names and parameter names."""
@@ -70,7 +70,8 @@ def assign_proto(proto, name, val):
         for k, v in six.iteritems(val):
             assign_proto(getattr(proto, name), k, v)
     else:
-        setattr(proto, name, val)
+        if val is not None:  #added by Lisa
+            setattr(proto, name, val)
 
 
 class Top(object):

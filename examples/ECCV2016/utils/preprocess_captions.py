@@ -138,11 +138,10 @@ if __name__ == '__main__':
       words = [] 
       for caption in descriptions['annotations']:
         words.extend(split_sentence(caption['caption']))
-      vocab = set()
-      for word in words:
-        vocab.add(word) 
-      write_txt = open('data/vocab.txt', 'w')
-      for v in list(vocab):
-        write_txt.writelines('%s\n' %v)
-      write_txt.close()
+      vocab = ['<unk>'] + sorted(list(set(words)))
+      vocab_file = open('data/vocab.txt', 'w')
+      for v in vocab:
+        vocab_file.writelines('%s\n' %v)
+      vocab_file.close()
+
 

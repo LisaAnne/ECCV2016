@@ -2,7 +2,7 @@
 
 import pdb
 import sys
-sys.path.insert(0,'../')
+sys.path.insert(0,'../utils/')
 from init import *
 sys.path.insert(0,caffe_dir)
 sys.path.insert(0,caffe_dir + '/python/')
@@ -19,7 +19,7 @@ sys.path.insert(0, '.')
 # seed the RNG so we evaluate on the same subset each time
 np.random.seed(seed=0)
 
-#from coco_to_hdf5_data import *
+from coco_to_hdf5_data import *
 home_dir = caffe_dir
 from captioner import Captioner
 
@@ -30,6 +30,7 @@ except:
   print "You must have the coco evaluation tools.  Please download and put the path name in 'utils/init.py"
 
 from pycocoevalcap.eval import COCOEvalCap
+from pycocotools.coco import COCO
 
 def read_json(t_file):
   j_file = open(t_file).read()
@@ -257,7 +258,7 @@ def determine_anno_path(dataset_name, split_name):
   if dataset_name == 'birds':
     return bird_anno_path % split_name 
   if dataset_name == 'birds_fg':
-    return bird_anno_path_fg % (split_name, split_name)
+    return bird_anno_path_fg % (split_name)
   else:
     raise Exception ("do not annotation path for dataset %s." %dataset_name)
 
@@ -274,9 +275,9 @@ def determine_image_pattern(dataset_name, split_name):
 
 def determine_vocab_folder(dataset_name, split_name):
   if dataset_name == 'birds':
-    return bird_vocab_path 
+    return 'data/' 
   if dataset_name == 'birds_fg':
-    return bird_vocab_path 
+    return 'data/'
   else:
     raise Exception ("do not know vocab folder for dataset %s." %dataset_name) 
 
@@ -298,8 +299,8 @@ def build_captioner(model_name, image_net, LM_net, dataset_name='coco', split_na
   anno_path = determine_anno_path(dataset_name, split_name)
   image_root = determine_image_pattern(dataset_name, split_name) 
 
-  sg = build_sequence_generator(anno_path, BUFFER_SIZE, image_root, vocab=vocab, 
-                            max_words=MAX_WORDS, align=False, shuffle=False,
+  sg = build_sequence_generator(anno_path, 50, image_root, vocab=vocab, 
+                            max_words=50, align=False, shuffle=False,
                             gt_captions=True, pad=True, truncate=True, 
                             split_ids=None)
   dataset = {}
@@ -349,4 +350,3 @@ def main(model_name,image_net, LM_net,  dataset_name='coco', split_name='val', v
     if 'read_file' in experiment.keys(): read_file=experiment['read_file']
     else: read_file=True
     experimenter.score_generation(json_filename=experiment['json_file'])
-

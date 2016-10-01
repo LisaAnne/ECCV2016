@@ -16,12 +16,10 @@ def make_lrcn_param_str(label_options = {'label_format': 'number'}, data_layer='
   
   param_str_train = {}
   param_str_test = {}
-  param_str_train['caption_json'] = bird_anno_path_fg %('train_noCub', 'train_noCub')
-  param_str_test['caption_json'] = bird_anno_path_fg %(test_set, test_set)
-  param_str_train['vocabulary'] = bird_vocab_path + 'CUB_vocab_noUNK.txt' 
-  param_str_test['vocabulary'] = bird_vocab_path + 'CUB_vocab_noUNK.txt' 
-  param_str_train['base_image_path'] = bird_image_path 
-  param_str_test['base_image_path'] = bird_image_path 
+  param_str_train['caption_json'] = bird_anno_path_fg %('train_noCub')
+  param_str_test['caption_json'] = bird_anno_path_fg %(test_set)
+  param_str_train['vocabulary'] = 'data/vocab.txt' 
+  param_str_test['vocabulary'] = 'data/vocab.txt' 
 
   output_keys = [('text_data_key', 'input_sentence'), ('text_label_key', 'target_sentence'), ('text_marker_key', 'cont_sentence'), ('image_data_key', 'image_data'), ('data_label', 'data_label'), ('data_label_feat', 'data_label_feat')]
   top_names = ['input_sentence', 'target_sentence', 'cont_sentence', 'image_data', 'data_label', 'data_label_feat']
@@ -43,14 +41,10 @@ def make_lrcn_class_param_str(label_options = {'label_format': 'number', 'senten
   
   param_str_train = {}
   param_str_test = {}
-  param_str_train['caption_json'] = bird_anno_path_fg %('train_noCub', 'train_noCub')
-  param_str_test['caption_json'] = bird_anno_path_fg %('val', 'val')
-  param_str_train['vocabulary'] = bird_vocab_path + 'CUB_vocab_noUNK.txt' 
-  param_str_test['vocabulary'] = bird_vocab_path + 'CUB_vocab_noUNK.txt' 
-  #param_str_train['vocabulary'] = bird_vocab_path + 'CUB_vocab.txt' 
-  #param_str_test['vocabulary'] = bird_vocab_path + 'CUB_vocab.txt' 
-  param_str_train['base_image_path'] = bird_image_path
-  param_str_test['base_image_path'] = bird_image_path
+  param_str_train['caption_json'] = bird_anno_path_fg %('train_noCub')
+  param_str_test['caption_json'] = bird_anno_path_fg %('val')
+  param_str_train['vocabulary'] = 'data/vocab.txt' 
+  param_str_test['vocabulary'] = 'data/vocab.txt' 
  
   output_keys = [('text_data_key', 'input_sentence'), ('text_label_key', 'target_sentence'), ('text_marker_key', 'cont_sentence'), ('data_label', 'data_label')]
   top_names = ['input_sentence', 'target_sentence', 'cont_sentence', 'data_label']
@@ -71,7 +65,7 @@ def make_lrcn_class_param_str(label_options = {'label_format': 'number', 'senten
 
 def build_sentence_generation_deploy():
   data_inputs = {}
-  data_inputs['param_str'] ={'vocabulary': bird_vocab_path + 'CUB_vocab_noUNK.txt'}
+  data_inputs['param_str'] ={'vocabulary': 'data/vocab.txt'}
   model_train = lrcn.lrcn(data_inputs, lstm_dim=1000, embed_dim=1000, class_conditional=True, image_conditional=True, class_size=200, image_dim=8192)
   model_train.make_sentence_generation_deploy() 
 

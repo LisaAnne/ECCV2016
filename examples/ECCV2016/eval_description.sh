@@ -1,14 +1,14 @@
 #!/bin/sh
 
-experiment_type=eval_caffe_model #eval_caffe_model
+experiment_type=eval_caffe_model 
 image_net=/examples/ECCV2016/prototxt/deploy.prototxt
 
 #FINAL LRCN
 word_net=/examples/ECCV2016/prototxt/wtd_1000.prototxt
-model=tmp_prototxts/lrcn_cc_feat_ccF_feat_ccF_modelSearch_iter_7000
+model=gve_models/description
 
 dataset_name='birds_fg'
-split_name='test'
+split_name='test' #val
 vocab='CUB_vocab'
 
 echo $dataset_name
