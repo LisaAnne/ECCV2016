@@ -2,7 +2,7 @@
 
 import pdb
 import sys
-sys.path.insert(0,'../utils/')
+sys.path.insert(0,'utils/')
 from init import *
 sys.path.insert(0,caffe_dir)
 sys.path.insert(0,caffe_dir + '/python/')
