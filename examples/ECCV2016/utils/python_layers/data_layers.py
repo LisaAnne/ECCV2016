@@ -478,7 +478,6 @@ class python_data_layer(caffe.Layer):
     for top_index, name in zip(range(len(top)), self.top_names):
       top[top_index].data[...] = self.thread_result[name] 
 
-    pdb.set_trace()
     self.dispatch_worker()
       
   def dispatch_worker(self):

@@ -7,11 +7,12 @@ image_net=/examples/ECCV2016/prototxt/deploy.prototxt
 word_net=/examples/ECCV2016/prototxt/wtd_1000.prototxt
 model=gve_models/description
 #model=snapshots/description_iter_1000
+model=snapshots/description_HEAD_nv_iter_10000
 
 dataset_name='birds_fg'
 split_name='val' #val
-vocab='CUB_vocab'
-#vocab='vocab'
+#vocab='CUB_vocab'
+vocab='vocab'
 
 echo $dataset_name
 python eval_scripts.py --experiment_type $experiment_type \
