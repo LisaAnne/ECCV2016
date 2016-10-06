@@ -2,8 +2,9 @@
 
 #This will download all data you need to run "Generating Visual Explanation" code.  You will need the coco evaluation toolbox as well.
 
-data_files=( "CUB_feature_dict.p" "CUB_label_dict.p" "cub_missing.txt" "bilinear_preds.p" "cub_0917_5cap.tsv" "train_noCub.txt" "val.txt" "test.txt" "lrcn_cc_feat_ccF_feat_ccF_iter_5000_train_gt.p" "CUB_vocab.txt" "CUB_vocab_noUNK.txt" )
-model_files=( "caption_classifier.caffemodel" "definition.caffemodel" "description_unrolled.caffemodel" "description.caffemodel" "explanation-dis.caffemodel" "explanation-label_unrolled.caffemodel" "explanation-label.caffemodel" "explanation.caffemodel" "caption_classifier_2311.caffemodel")
+data_files=( "CUB_feature_dict.p" "CUB_label_dict.p" "bilinear_preds.p" "cub_0917_5cap.tsv" "train_noCub.txt" "val.txt" "test.txt" "description_sentence_features.p" )
+model_files=( "caption_classifier_1006.caffemodel" "definition_1006.caffemodel"  "description_1006.caffemodel" "explanation-dis_1006.caffemodel"  "explanation-label_1006.caffemodel" "explanation_1006.caffemodel" )
+cider_scores=( "cider_score_dict_definition.p" "cider_score_dict_description.p" "cider_score_dict_explanation-dis.p" "cider_score_dict_explanation-label.p" "cider_score_dict_explanation.p" )
 
 echo "Downloading data..."
 
@@ -36,6 +37,20 @@ do
   fi
 done
 cd ..
+
+echo "Downloading cider scores..."
+mkdir -p cider_scores 
+cd cider_scores
+for i in "${cider_scores[@]}"
+do 
+  echo "Downloading: " $i
+  if [ ! -f $i ];
+  then
+    wget https://people.eecs.berkeley.edu/~lisa_anne/generating_visual_explanations/cider_scores/$i
+  fi
+done
+cd ..
+
 
 mkdir -p prototxt
 mkdir -p snapshots

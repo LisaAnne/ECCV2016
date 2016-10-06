@@ -36,7 +36,8 @@ def tokenize_text(sentence, vocabulary):
    try:
      token_sent.append(vocabulary[w])
    except:
-     token_sent.append(vocabulary['<unk>'])
+     pass
+     #token_sent.append(vocabulary['<unk>'])
  token_sent.append(vocabulary['EOS'])
  return token_sent
 
@@ -60,10 +61,10 @@ def average_image_sents(image_ids, probs, gt):
 
   print "Accuracy averaging over sentence: %f" %compute_accuracy(labels_av, gt_av)
 
-def analyze_gen_net(model, model_weights, caps, save_classifications=True):
+def analyze_gen_net(model, model_weights, caps, save_classifications=False):
   net = caffe.Net(model, model_weights, caffe.TEST)
 
-  vocab_txt = bird_vocab_path + 'CUB_vocab.txt' 
+  vocab_txt = 'data/vocab.txt' 
   vocab = open_vocab(vocab_txt)
   vocab_size = len(vocab.keys())
 
@@ -128,15 +129,14 @@ def analyze_gen_net(model, model_weights, caps, save_classifications=True):
   average_image_sents(zip(*token_captions)[2], all_probs_probs, all_gt_labels)
 
 def analyze_net(model, model_weights):
-  pdb.set_trace()
   net = caffe.Net(model, model_weights, caffe.TEST)
 
-  save_activation = True
+  save_activation = False
 
   #arg_split = 'train_noCub'
   arg_split = 'val'
-  val_caps = bird_anno_path_fg %(arg_split, arg_split)
-  vocab_txt = bird_vocab_path + 'CUB_vocab.txt' 
+  val_caps = bird_anno_path_fg %(arg_split)
+  vocab_txt = 'data/vocab.txt' 
   vocab = open_vocab(vocab_txt)
   vocab_size = len(vocab.keys())
 
@@ -212,10 +212,8 @@ def analyze_net(model, model_weights):
 
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
-#  parser.add_argument("--model_name",type=str, default='prototxt/lstm_predict_label_from_sentence_deploy.prototxt')
-#  parser.add_argument("--model_weights",type=str, default='snapshots_final/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_iter_6000.caffemodel')
-  parser.add_argument("--model_name", type=str, default='eccv_prototxts/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_deploy.prototxt')
-  parser.add_argument("--model_weights",type=str, default='eccv_snapshots/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_iter_6000.caffemodel')
+  parser.add_argument("--model_name", type=str, default='prototxt/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_deploy.prototxt')
+  parser.add_argument("--model_weights",type=str, default='gve_models/caption_classifier_1006.caffemodel')
   parser.add_argument("--caps",type=str)
   parser.add_argument("--sentence_type", type=str, default='gt')
   args = parser.parse_args()

@@ -90,7 +90,7 @@ def build_sentence_generation_model(model_id, class_conditional, image_condition
 
   data_inputs_train = data_inputs_train
   data_inputs_test = data_inputs_test
-  label_options = {'vector_file': '/home/lisaanne/caffe-LSTM/examples/finegrained_descriptions/utils_fineGrained/class_embedding/lrcn_cc_feat_ccF_feat_ccF_iter_5000_train_gt.p'}
+  label_options = {'vector_file': 'data/description_HEAD_nv_iter_4000_train_noCub_gt_0930.p'}
   param_str_train, param_str_test = make_lrcn_param_str(label_options=label_options) 
  
   data_inputs_train['param_str'] = param_str_train
@@ -137,7 +137,7 @@ def caption_classifier(embed_dim, lstm_dim, embed_drop, lstm_drop):
   cn.make_solver(save_file_solver, [save_file_train], [save_file_test_on_train, save_file_test_on_test], **{'base_lr': 0.1, 'stepsize': 2000, 'max_iter': 6000})
   cn.make_bash_script(save_bash, save_file_solver)
 
-def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None, classify_model=None, classify_weights=None, RL_loss='lstm_classification', class_conditional=True):
+def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None, classify_model=None, classify_weights=None, RL_loss='lstm_classification', class_conditional=True, lw=20):
 
 
   save_file_name_base = 'prototxt/%s' %save_file_name
@@ -148,7 +148,7 @@ def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None,
   save_file_solver = '%s_%s.prototxt' %(save_file_name_base, 'solver')
   save_bash = '%s_%s.sh' %('train', save_file_name)
   
-  label_options = {'vector_file': '/home/lisaanne/caffe-LSTM/examples/finegrained_descriptions/utils_fineGrained/class_embedding/lrcn_cc_feat_ccF_feat_ccF_iter_5000_train_gt.p'}
+  label_options = {'vector_file': 'data/description_HEAD_nv_iter_4000_train_noCub_gt_0930.p'}
 
   data_layer = 'extractGVEFeatures'
   data_inputs_train = {}
@@ -164,19 +164,20 @@ def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None,
   data_inputs_test['param_str'] = param_str_test
 
   model_train = reinforce.reinforce(data_inputs_train, cc=class_conditional, baseline=False, separate_sents=True)
-  model_train.lrcn_reinforce(save_name=save_file_train, RL_loss=RL_loss)
+  model_train.lrcn_reinforce(save_name=save_file_train, RL_loss=RL_loss, lw=lw)
  
   model_lm_deploy = reinforce.reinforce(data_inputs_test, cc=class_conditional, T=1)
   model_lm_deploy.lrcn_reinforce_wtd_deploy(save_name=save_file_deploy %'wtd')
 
-  cn.make_solver(save_file_solver, [save_file_train], [], base_lr=0.001,max_iter=30000)
+  cn.make_solver(save_file_solver, [save_file_train], [], 
+                  **{'base_lr': 0.001, 'stepsize': 2000, 'max_iter': 10000, 'snapshot': 1000})
 
   if weights:
     ind_model_weights = transfer_net_weights(orig_proto, weights, save_file_train) 
-    transfer_weights = transfer_combine_weights(save_file_train, classify_model, ind_model_weights, classify_weights) 
+    save_file_train = transfer_combine_weights(save_file_train, classify_model, ind_model_weights, classify_weights) 
   
   if weights: 
-    cn.make_bash_script(save_bash, save_file_solver, weights=transfer_weights)
+    cn.make_bash_script(save_bash, save_file_solver, weights=save_file_train)
   else:
     cn.make_bash_script(save_bash, save_file_solver)
 
@@ -190,7 +191,7 @@ if __name__ == '__main__':
   parser.add_argument("--lstm_dim",type=float, default=1000)
   parser.add_argument("--weights",type=str, default=None)
   parser.add_argument("--classify_model",type=str, default='prototxt/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_train.prototxt')
-  parser.add_argument("--classify_weights",type=str, default='gve_models/caption_classifier_2311.caffemodel')
+  parser.add_argument("--classify_weights",type=str, default='snapshots/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_iter_6000.caffemodel')
 
   args = parser.parse_args()
   
@@ -203,9 +204,9 @@ if __name__ == '__main__':
   elif args.net_type == 'deploy':
     build_sentence_generation_deploy() 
   elif args.net_type == 'explanation-dis':
-    sentence_generation_reinforce('explanation-dis', orig_proto='prototxt/description_train.prototxt', classify_model=args.classify_model, classify_weights=args.classify_weights,  weights=args.weights, class_conditional=False)
+    sentence_generation_reinforce('explanation-dis', orig_proto='prototxt/description_train.prototxt', classify_model=args.classify_model, classify_weights=args.classify_weights,  weights=args.weights, class_conditional=False, lw=80)  #Loss weight parameter chosen by parameter search
   elif args.net_type == 'explanation':
-    sentence_generation_reinforce('explanation', orig_proto='prototxt/explanation-label_train.prototxt', classify_model=args.classify_model, classify_weights=args.classify_weights,  weights=args.weights, class_conditional=True)
+    sentence_generation_reinforce('explanation', orig_proto='prototxt/explanation-label_train.prototxt', classify_model=args.classify_model, classify_weights=args.classify_weights,  weights=args.weights, class_conditional=True, lw=110)  #Loss weight parameter chocen by parameter search
   elif args.net_type == 'caption_classifier':
     caption_classifier(int(args.embed_dim), 
                        int(args.lstm_dim), 

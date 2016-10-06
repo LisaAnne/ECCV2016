@@ -15,18 +15,13 @@ Hendricks, L.A., Akata, Z., Rohrbach, M., Donahue, J., Schiele, B. and Darrell, 
 
 ## Getting Started
 
-1.  Please clone my git repo.  My code is in /examples/ECCV2016.  You will need to use my version of caffe.
+1.  Please clone my git repo.  My code for generating visual explanations is in /examples/ECCV2016.  You will need to use my version of caffe.
 2.  Download data using the "download_data.sh" script.  This will also preprocess the CUB sentences.  All my ECCV 2016 models will be put in "gve_models"
 
 ## Building the models
 
-All the models are generated using NetSpc.  Please build them by running "build_nets.sh".  "build_nets.sh" will also generate bash scripts you can use to train models.
+All the models are generated using NetSpec.  Please build them by running "build_nets.sh".  "build_nets.sh" will also generate bash scripts you can use to train models.
 
 ## Evaluation models
 
-Please use the bash scripts eval_*.sh to evaluate all the models.
-
-## Coming soon...
-1.  Code to generate "data/CUB_label_dict.p"
-2.  Code to run the class relevance metrics
-
+Please use the bash scripts eval_*.sh to evaluate all the models.  Please note that I retrained the models since the initial arXiv version of the paper was released so the numbers are slightly different, though the main trends remain the same.

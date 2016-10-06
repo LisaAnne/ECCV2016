@@ -169,7 +169,7 @@ def eval_cc_caffe_model(args):
   print 'Computing image descriptors'
   descriptor_labels = [df.split('/')[-2].split('.')[0] for df in experimenter.images]
   if pred:
-    label_dict = pkl.load(open('/x/lisaanne/finegrained/bilinear_preds.p', 'r')) 
+    label_dict = pkl.load(open('data/bilinear_preds.p', 'r')) 
     descriptor_labels = [label_dict['/'.join(df.split('/')[-2:])] + 1 for df in experimenter.images]
 
   experimenter.compute_descriptors(des_file_idx=0, file_load=False)

@@ -13,7 +13,7 @@ class reinforce(lrcn.lrcn):
   
   #reinforce nets will just take lrcn nets and add in sampling to the last layer   
  
-  def __init__(self, data_inputs, lstm_dim = 1000, embed_dim = 1000, cc=True, class_size=0, image_dim=1000, baseline=False, separate_sents=False, T=20):
+  def __init__(self, data_inputs, lstm_dim = 1000, embed_dim = 1000, cc=True, class_size=1000, image_dim=1000, baseline=False, separate_sents=False, T=20):
     self.n = caffe.NetSpec()
     self.silence_count = 0
     self.data_inputs = data_inputs
@@ -101,7 +101,7 @@ class reinforce(lrcn.lrcn):
     self.silence([self.n.tops['lstm1_c%d' %(self.T)]])
     self.silence([self.n.tops['lstm2_c%d' %(self.T)]])
 
-  def lrcn_reinforce(self, save_name, RL_loss='lstm_classification'):
+  def lrcn_reinforce(self, save_name, RL_loss='lstm_classification', lw=20):
    
     data_inputs = self.data_inputs
     param_str = self.param_str

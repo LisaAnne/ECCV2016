@@ -73,6 +73,14 @@ class lrcn(caffe_net):
     self.make_lrcn_net_lm(self.n.tops['image_features'], self.n.tops['cont_sentence'], self.n.tops['input_sentence'], 'predict')
     self.n.tops['probs'] = self.softmax(self.n.tops['predict'], axis=2) 
     self.write_net('prototxt/wtd_2000.prototxt')
+
+    self.n = caffe.NetSpec()
+    self.n.tops['input_sentence'] = self.dummy_data_layer([20,1000])
+    self.n.tops['cont_sentence'] = self.dummy_data_layer([20,1000])
+    self.n.tops['image_features'] = self.dummy_data_layer([1000, 2000])
+    self.make_lrcn_net_lm(self.n.tops['image_features'], self.n.tops['cont_sentence'], self.n.tops['input_sentence'], 'predict')
+    self.n.tops['probs'] = self.softmax(self.n.tops['predict'], axis=2) 
+    self.write_net('prototxt/wtd_1000_20words.prototxt')
  
   def make_sentence_generation_net(self, save_file, accuracy=False, loss=True):
     self.n = caffe.NetSpec()
