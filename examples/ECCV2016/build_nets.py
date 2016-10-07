@@ -1,3 +1,5 @@
+''' Builds all caffe models '''
+
 import argparse
 import sys
 sys.path.append('utils/')

@@ -1,3 +1,17 @@
+''' Code to evaluate sentence classifiers 
+    
+    To evaluate classifier on gt sentences:
+      python eval_lstm_sentence_classifiers.py --model_name MODEL_PROTO 
+                                               --model_weights CAFFE_WEIGHTS
+                                               --caps PATH_TO_SENTENCES
+                                               --sentence_type gt 
+    To evaluate classifier on generated sentences:
+      python eval_lstm_sentence_classifiers.py --model_name MODEL_PROTO 
+                                               --model_weights CAFFE_WEIGHTS
+                                               --caps PATH_TO_SENTENCES
+                                               --sentence_type gt 
+  '''
+
 import sys
 sys.path.insert(0, '../../python/')
 sys.path.insert(0, 'utils/')

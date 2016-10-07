@@ -1,3 +1,5 @@
+''' TODO: Clean and make more consistent '''
+
 from __future__ import print_function
 from init import *
 import sys

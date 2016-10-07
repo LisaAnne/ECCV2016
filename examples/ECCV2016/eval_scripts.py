@@ -1,3 +1,5 @@
+''' Image relevance evaluation code '''
+
 import argparse
 import sys
 sys.path.append('utils/')
