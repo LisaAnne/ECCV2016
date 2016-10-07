@@ -26,7 +26,10 @@ class reinforce(lrcn.lrcn):
     self.cc = cc #class_conditional
     self.class_size = class_size
     self.image_dim = image_dim
-    self.feature_dim = self.image_dim + self.class_size 
+    if cc:
+      self.feature_dim = self.image_dim + self.class_size 
+    else:
+      self.feature_dim = self.image_dim
     if 'stream_size' in self.param_str.keys():
       self.T = self.param_str['stream_size']
     else:

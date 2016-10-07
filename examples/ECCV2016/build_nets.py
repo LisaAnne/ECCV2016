@@ -193,7 +193,7 @@ if __name__ == '__main__':
   parser.add_argument("--lstm_dim",type=float, default=1000)
   parser.add_argument("--weights",type=str, default=None)
   parser.add_argument("--classify_model",type=str, default='prototxt/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_train.prototxt')
-  parser.add_argument("--classify_weights",type=str, default='snapshots/caption_classifier_embedDrop_75_lstmDrop_75_embedHidden_1000_lstmHidden_1000_iter_6000.caffemodel')
+  parser.add_argument("--classify_weights",type=str, default='gve_models/caption_classifier_1006.caffemodel')
 
   args = parser.parse_args()
   
