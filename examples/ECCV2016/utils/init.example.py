@@ -3,11 +3,11 @@ import sys
 
 coco_eval_path = PATH_TO_COCO_EVAL_TOOLS 
 
+caffe_dir = '../../'
 sys.path.insert(0, caffe_dir + 'python_layers/')
 pycaffe_path = '../../python/'
 cub_features = 'data/CUB_feature_dict.p'
-bird_anno_path_fg = 'descriptions/descriptions_bird.%s.fg_%s.json'
-caffe_dir = '../../'
+bird_anno_path_fg = 'data/descriptions_bird.%s.fg.json'
 
 cache_home = 'generated_sentences/'
 
