@@ -24,7 +24,7 @@ All the models are generated using NetSpec.  Please build them by running "build
 
 ## Training the models
 
-If you would like to retrain my models, please use the following instructions.  Note that all my trained models are in "gve_models".  All the training scripts will be build using "build_nets.sh"
+If you would like to retrain my models, please use the following instructions.  Note that all my trained models are in "gve_models".  All the training scripts will be built using "build_nets.sh"
 
 1.  First train the description model ("./train_description.sh").  The learned hidden units of the description model are used to build a representation for the 200 CUB classes.
 2.  Run "make_class_embedding.sh" to build the class embeddings
