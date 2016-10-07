@@ -92,7 +92,7 @@ def build_sentence_generation_model(model_id, class_conditional, image_condition
 
   data_inputs_train = data_inputs_train
   data_inputs_test = data_inputs_test
-  label_options = {'vector_file': 'data/description_HEAD_nv_iter_4000_train_noCub_gt_0930.p'}
+  label_options = {'vector_file': 'data/description_sentence_features.p'}
   param_str_train, param_str_test = make_lrcn_param_str(label_options=label_options) 
  
   data_inputs_train['param_str'] = param_str_train
@@ -150,7 +150,7 @@ def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None,
   save_file_solver = '%s_%s.prototxt' %(save_file_name_base, 'solver')
   save_bash = '%s_%s.sh' %('train', save_file_name)
   
-  label_options = {'vector_file': 'data/description_HEAD_nv_iter_4000_train_noCub_gt_0930.p'}
+  label_options = {'vector_file': 'data/description_sentence_features.p'}
 
   data_layer = 'extractGVEFeatures'
   data_inputs_train = {}
