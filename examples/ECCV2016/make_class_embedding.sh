@@ -1,8 +1,8 @@
 #!/bin/sh
 
 image_net=/examples/ECCV2016/prototxt/deploy.prototxt
-word_net=/examples/finegrained_descriptions/eccv_prototxts//lrcn_cc_feat_ccF_feat_ccF_wtd_all.prototxt
-model=snapshots/description_HEAD_nv_iter_4000
+word_net=/examples/ECCV2016/prototxt/wtd_1000_all.prototxt
+model=snapshots/description_1006
 
 size_input_feature=1000
 
