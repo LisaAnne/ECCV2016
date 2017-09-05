@@ -2,7 +2,7 @@
 
 #This will download all data you need to run "Generating Visual Explanation" code.  You will need the coco evaluation toolbox as well.
 
-data_files=( "CUB_feature_dict.p" "CUB_label_dict.p" "bilinear_preds.p" "cub_0917_5cap.tsv" "train_noCub.txt" "val.txt" "test.txt" "description_sentence_features.p" )
+data_files=( "CUB_feature_dict.p" "CUB_label_dict.p" "bilinear_preds.p" "cub_0917_5cap.tsv" "train_noCub.txt" "val.txt" "test.txt" "description_sentence_features.p" "CUB_vocab_noUNK.txt")
 model_files=( "caption_classifier_1006.caffemodel" "definition_1006.caffemodel"  "description_1006.caffemodel" "explanation-dis_1006.caffemodel"  "explanation-label_1006.caffemodel" "explanation_1006.caffemodel" )
 cider_scores=( "cider_score_dict_definition.p" "cider_score_dict_description.p" "cider_score_dict_explanation-dis.p" "cider_score_dict_explanation-label.p" "cider_score_dict_explanation.p" )
 
