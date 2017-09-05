@@ -8,6 +8,7 @@ sys.path.insert(0, caffe_dir + 'python_layers/')
 pycaffe_path = '../../python/'
 cub_features = 'data/CUB_feature_dict.p'
 bird_anno_path_fg = 'data/descriptions_bird.%s.fg.json'
+bird_bocab_path = 'data/'
 
 cache_home = 'generated_sentences/'
 
