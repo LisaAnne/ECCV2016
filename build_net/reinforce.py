@@ -69,7 +69,7 @@ class reinforce(lrcn.lrcn):
       top_name_hidden2 = 'lstm2_h%d' %(t+1)
       top_name_cell2 = 'lstm2_c%d' %(t+1)
       
-      self.n.tops[bottom_cont_reshape_t] = L.Reshape(self.n.tops[bottom_cont_t], shape=dict(dim=[1,1,-1]))
+      self.n.tops[bottom_cont_reshape_t] = L.Reshape(self.n.tops[bottom_cont_t], shape=dict(dim=[1,-1]))
 
       self.n.tops['embed_%d' %t] = self.embed(self.n.tops[bottom_sent], self.embed_dim, input_dim=self.vocab_size, bias_term=False, weight_filler=self.uniform_weight_filler(-.08, .08), learning_param=embed_learning_param, propagate_down=[0]) 
       

@@ -44,14 +44,16 @@ class lrcn(caffe_net):
   def make_lrcn_net_lm(self, bottom_data, bottom_cont, bottom_sent, top_name='predict'):
     self.n.tops['embed'] = self.embed(bottom_sent, self.embed_dim, input_dim=self.vocab_size, bias_term=False, weight_filler=self.uniform_weight_filler(-.08, .08)) 
     
-    self.lstm(self.n.tops['embed'], bottom_cont, top_name = 'lstm1', lstm_hidden=self.lstm_dim)
-  
-    self.lstm(self.n.tops['lstm1'], bottom_cont, lstm_static = bottom_data, top_name = 'lstm2', lstm_hidden=self.lstm_dim)
+    lstm1 = self.lstm(self.n.tops['embed'], bottom_cont, lstm_hidden=self.lstm_dim)
+    setattr(self.n, 'lstm1', lstm1)  
+
+    lstm2 = self.lstm(lstm1, bottom_cont, lstm_static = bottom_data, lstm_hidden=self.lstm_dim)
+    setattr(self.n, 'lstm2', lstm2)
     self.n.tops[top_name] = L.InnerProduct(self.n.tops['lstm2'], 
                             num_output=self.vocab_size, axis=2, 
                             weight_filler=self.uniform_weight_filler(-.08, .08), 
                             bias_filler=self.constant_filler(0), 
-                            param=self.learning_params([[1,1], [2,0]]))
+                            param=self.init_params([[1,1], [2,0]]))
  
   def make_sentence_generation_deploy(self):
     self.n.tops['data'] = self.dummy_data_layer([1,self.image_dim])

@@ -100,7 +100,7 @@ def build_sentence_generation_model(model_id, class_conditional, image_condition
 
   model_train = lrcn.lrcn(data_inputs_train, lstm_dim=1000, embed_dim=1000, class_conditional=class_conditional, image_conditional=image_conditional, class_size=200, image_dim=8192)
   model_train.make_sentence_generation_net(save_file_train, accuracy=False, loss=True) 
-  cn.make_solver(save_file_solver, [save_file_train], [], **solver_args)
+  cn.make_solver(save_file_solver, model_id, [save_file_train], [], **solver_args)
   cn.make_bash_script(save_bash, save_file_solver)
 
 def caption_classifier(embed_dim, lstm_dim, embed_drop, lstm_drop):
