@@ -5,8 +5,7 @@ image_net=prototxt/deploy.prototxt
 
 #FINAL LRCN
 word_net=prototxt/wtd_1000.prototxt
-model=snapshots/description_010517_iter_3000
-#model=gve_models/description_1006
+model=snapshots/description_1006
 
 dataset_name='birds_fg'
 split_name='test' #val
@@ -21,4 +20,4 @@ python eval_scripts.py --experiment_type $experiment_type \
                        --split_name $split_name \
                        --vocab $vocab \
                        --prev_word_restriction \
-                       --precomputed_h5 data/CUB_feature_010517.p 
+                       --precomputed_h5 data/CUB_feature_diect.p 
