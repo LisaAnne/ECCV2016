@@ -171,7 +171,7 @@ def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None,
   model_lm_deploy = reinforce.reinforce(data_inputs_test, cc=class_conditional, T=1)
   model_lm_deploy.lrcn_reinforce_wtd_deploy(save_name=save_file_deploy %'wtd')
 
-  cn.make_solver(save_file_solver, save_file_name_base, [save_file_train], [], 
+  cn.make_solver(save_file_solver, save_file_name, [save_file_train], [], 
                   **{'base_lr': 0.001, 'stepsize': 2000, 'max_iter': 10000, 'snapshot': 1000})
 
   if weights:

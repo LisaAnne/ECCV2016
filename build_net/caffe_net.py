@@ -96,6 +96,7 @@ class caffe_net(object):
             weight_filler=None, bias_filler=None, learning_param=None):
 
     kwargs = {'num_output': nout, 'input_dim': input_dim, 'bias_term': bias_term}
+    if not isinstance(propagate_down, bool): kwargs['propagate_down'] = propagate_down
     kwargs = self.init_fillers(kwargs, weight_filler, bias_filler, learning_param)
     return L.Embed(bottom, **kwargs)
 
