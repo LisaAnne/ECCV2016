@@ -18,7 +18,6 @@ python eval_scripts.py --experiment_type $experiment_type \
                        --split_name $split_name \
                        --vocab $vocab \
                        --size_input_features $size_input_features \
-                       --label_scale $label_scale \
                        --prev_word_restriction \
                        --precomputed_h5 data/CUB_feature_dict.p \
                        --lookup_mat $lookup_mat \
