@@ -16,6 +16,9 @@ base_prototxt_file = 'prototxt/'
 class caffe_net(object):
 
   def __init__(self):
+    self.initialize_net()
+
+  def initialize_net(self):
     self.n = caffe.NetSpec()
     self.silence_count = 0
 
@@ -34,7 +37,7 @@ class caffe_net(object):
       print(write_proto, file=f)
     print("Wrote net to: %s." %save_file)
     #reinitialized network
-    self.__init__()
+    self.initialize_net()
   
   def init_params(self, param_list, name_list=None):
     if name_list:
@@ -55,7 +58,7 @@ class caffe_net(object):
   def init_fillers(self, kwargs, weight_filler=None, bias_filler=None, learning_param=None):
     if weight_filler: kwargs['weight_filler'] = weight_filler
     if bias_filler: kwargs['bias_filler'] = bias_filler
-    if learning_param: kwargs['learning_param'] = learning_param
+    if learning_param: kwargs['param'] = learning_param
     return kwargs 
 
   #The following methods will return layers.  Input is bottom to layer + parameters, and output is top(s)
@@ -124,7 +127,7 @@ class caffe_net(object):
     return L.Python(*inputs, module=module, layer=layer, param_str=str(param_str), ntop=1, loss_weight=[loss_weight])
 
   def rename_tops(self, tops, names):
-    if not isinstance(tops, tuple): 
+    if not (isinstance(tops, list) or isinstance(tops, tuple)): 
       tops = [tops]
     if isinstance(names, str):
       names = [names]

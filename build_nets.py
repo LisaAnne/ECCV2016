@@ -136,7 +136,7 @@ def caption_classifier(embed_dim, lstm_dim, embed_drop, lstm_drop):
   model_test_on_test = lrcn.lrcn(data_inputs_test, lstm_dim=lstm_dim, embed_dim=embed_dim)
   model_test_on_test.caption_classifier(save_file_test_on_test, accuracy=True, loss=False)
 
-  cn.make_solver(save_file_solver, [save_file_train], [save_file_test_on_train, save_file_test_on_test], **{'base_lr': 0.1, 'stepsize': 2000, 'max_iter': 6000})
+  cn.make_solver(save_file_solver, save_file_name_base, [save_file_train], [save_file_test_on_train, save_file_test_on_test], **{'base_lr': 0.1, 'stepsize': 2000, 'max_iter': 6000})
   cn.make_bash_script(save_bash, save_file_solver)
 
 def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None, classify_model=None, classify_weights=None, RL_loss='lstm_classification', class_conditional=True, lw=20):
@@ -171,7 +171,7 @@ def sentence_generation_reinforce(save_file_name, weights=None, orig_proto=None,
   model_lm_deploy = reinforce.reinforce(data_inputs_test, cc=class_conditional, T=1)
   model_lm_deploy.lrcn_reinforce_wtd_deploy(save_name=save_file_deploy %'wtd')
 
-  cn.make_solver(save_file_solver, [save_file_train], [], 
+  cn.make_solver(save_file_solver, save_file_name_base, [save_file_train], [], 
                   **{'base_lr': 0.001, 'stepsize': 2000, 'max_iter': 10000, 'snapshot': 1000})
 
   if weights:

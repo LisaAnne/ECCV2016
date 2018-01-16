@@ -96,7 +96,7 @@ class lrcn(caffe_net):
 
     if self.ic:
       feature_name = 'fc8'
-      self.n.tops[feature_name] = L.InnerProduct(self.n.tops['image_data'], num_output=1000, weight_filler=self.uniform_weight_filler(-.08, .08), bias_filler=self.constant_filler(0), param=self.learning_params([[1,1], [2,0]]))
+      self.n.tops[feature_name] = L.InnerProduct(self.n.tops['image_data'], num_output=1000, weight_filler=self.uniform_weight_filler(-.08, .08), bias_filler=self.constant_filler(0), param=self.init_params([[1,1], [2,0]]))
 
     if (self.cc) & (not self.ic):
        lrcn_input = 'data_label_feat'
@@ -141,7 +141,7 @@ class lrcn(caffe_net):
       embed_name = 'embed-drop' 
  
     lstm_name = 'lstm'
-    self.lstm(self.n.tops[embed_name], self.n.tops['cont_sentence'], top_name = lstm_name, lstm_hidden=self.lstm_dim)
+    self.n.tops[lstm_name] = self.lstm(self.n.tops[embed_name], self.n.tops['cont_sentence'], lstm_hidden=self.lstm_dim)
     if (lstm_drop > 0) & (not deploy):
       self.n.tops['lstm-drop'] = L.Dropout(self.n.tops[lstm_name], dropout_ratio=lstm_drop, in_place=True) 
       lstm_name = 'lstm-drop' 
@@ -150,7 +150,7 @@ class lrcn(caffe_net):
                             num_output=200, axis=2, 
                             weight_filler=self.uniform_weight_filler(-.08, .08), 
                             bias_filler=self.constant_filler(0), 
-                            param=self.learning_params([[1,1], [2,0]]))
+                            param=self.init_params([[1,1], [2,0]]))
   
     if loss:
       self.n.tops['loss'] = self.softmax_loss(self.n.tops['predict'], self.n.tops['data_label'], loss_weight=1, axis=2)

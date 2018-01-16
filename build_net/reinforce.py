@@ -44,8 +44,8 @@ class reinforce(lrcn.lrcn):
   def make_caption_model(self, static_input='fc8'):
 
     weight_filler = self.uniform_weight_filler(-0.08, 0.08)
-    embed_learning_param = self.named_params(['embed_w'], [[1,1]]) 
-    predict_learning_param = self.named_params(['predict_w', 'predict_b'], [[1,1],[2,0]]) 
+    embed_learning_param = self.init_params([[1,1]], ['embed_w']) 
+    predict_learning_param = self.init_params([[1,1],[2,0]], ['predict_w', 'predict_b']) 
     #xstatic
     self.n.tops['x_static_transform'] = L.InnerProduct(self.n.tops[static_input], num_output=self.gate_dim,
         bias_term=False, weight_filler=weight_filler,
@@ -127,7 +127,7 @@ class reinforce(lrcn.lrcn):
     data_tops = self.python_input_layer(data_inputs['module'], data_inputs['layer'], param_str)
     self.rename_tops(data_tops, data_inputs['param_str']['top_names'])
     feature_name = 'fc8'
-    self.n.tops[feature_name] = L.InnerProduct(self.n.tops[param_str['image_data_key']], num_output=1000, weight_filler=self.uniform_weight_filler(-.08, .08), bias_filler=self.constant_filler(0), param=self.learning_params([[1,1], [2,0]]))
+    self.n.tops[feature_name] = L.InnerProduct(self.n.tops[param_str['image_data_key']], num_output=1000, weight_filler=self.uniform_weight_filler(-.08, .08), bias_filler=self.constant_filler(0), param=self.init_params([[1,1], [2,0]]))
 
     if self.cc:
       #If class conditional
@@ -196,8 +196,8 @@ class reinforce(lrcn.lrcn):
 
     #RL loss
     if RL_loss == 'lstm_classification':
-      self.n.tops['embed_classification'] = self.embed(self.n.tops['word_sample_concat'], 1000, input_dim=self.vocab_size, bias_term=False, learning_param=self.learning_params([[0,0]]))
-      self.lstm(self.n.tops['embed_classification'], bottom_cont, top_name='lstm_classification', learning_param_lstm=self.learning_params([[0,0],[0,0],[0,0]]), lstm_hidden=1000)  
+      self.n.tops['embed_classification'] = self.embed(self.n.tops['word_sample_concat'], 1000, input_dim=self.vocab_size, bias_term=False, learning_param=self.init_params([[0,0]]))
+      self.n.tops['lstm_classification'] = self.lstm(self.n.tops['embed_classification'], bottom_cont, learning_param_lstm=self.init_params([[0,0],[0,0],[0,0]]), lstm_hidden=1000)  
       self.n.tops['predict_classification'] = L.InnerProduct(self.n.tops['lstm_classification'], num_output=200, axis=2)    
       self.n.tops['probs_classification'] = L.Softmax(self.n.tops['predict_classification'], axis=2)    
       #classification reward layer: classification, word_sample_concat (to get sentence length), 
