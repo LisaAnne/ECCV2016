@@ -35,7 +35,7 @@ If you would like to retrain my models, please use the following instructions.  
 5.  Train the explanation_dis and explanation models ("./train_explanation_dis.sh", "./train_explanation.sh").  These models are fine-tuned from the description and explanation_label model respecitvely.  The weighting between the relevance and discriminative loss can impact perforance substantially.  I found that loss weights of 80/20 on the relevance/discriminative losses worked best for the explanation-dis model and that loss weights of 110/20 on the relevance/discriminative losses worked best for the explanation model.  
 
 
-## Evaluation models
+## Evaluate
 
 Please use the bash scripts eval_*.sh to compute image relevance metrics.  To compute class relevance metrics, run "analyze_cider_scores.py".  This relies on precomputed CIDEr scores between each generated sentence and reference sentences from each class.  You can recompute these using "class_meteor_similarity_metric.py" but this will take > 10 hours.
 
