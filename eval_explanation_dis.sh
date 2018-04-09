@@ -9,7 +9,7 @@ model=gve_models/explanation-dis_1006
 
 size_input_feature=1000
 dataset_name='birds_fg'
-split_name='val'
+split_name='test'
 vocab='vocab'
 
 
