@@ -13,6 +13,8 @@ Hendricks, L.A., Akata, Z., Rohrbach, M., Donahue, J., Schiele, B. and Darrell, 
 }
 ```
 
+This code has been edited extensively (you can see old code on deprecated branch).  Hopefully it is easier to use, but please bug me if you run into issues.
+
 ## Getting Started
 
 1.  Please clone my git repo.  You will need to use my version of [caffe](https://github.com/LisaAnne/lisa-caffe-public/tree/bilinear), specifically the "bilinear" branch.
