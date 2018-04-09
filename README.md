@@ -15,7 +15,7 @@ Hendricks, L.A., Akata, Z., Rohrbach, M., Donahue, J., Schiele, B. and Darrell, 
 
 ## Getting Started
 
-1.  Please clone my git repo.  My code for generating visual explanations is in /examples/ECCV2016.  You will need to use my version of caffe.
+1.  Please clone my git repo.  You will need to use my version of [caffe](https://github.com/LisaAnne/lisa-caffe-public/tree/bilinear), specifically the "bilinear" branch.
 2.  Download data using the "download_data.sh" script.  This will also preprocess the CUB sentences.  All my ECCV 2016 models will be put in "gve_models"
 
 ## Building the models
