@@ -1,4 +1,4 @@
-# Generationg Visual Explanations 
+# Generating Visual Explanations 
 
 This repository contains code for the following paper:
 
