@@ -15,6 +15,8 @@ Hendricks, L.A., Akata, Z., Rohrbach, M., Donahue, J., Schiele, B. and Darrell, 
 
 This code has been edited extensively (you can see old code on deprecated branch).  Hopefully it is easier to use, but please bug me if you run into issues.
 
+Additionally, if you are interested in a pytorch version of this code, you can look at Stephan Alaniz's implementation [here](https://github.com/salaniz/pytorch-gve-lrcn/issues/5).  Thanks Stephan!
+
 ## Getting Started
 
 1.  Please clone my git repo.  You will need to use my version of [caffe](https://github.com/LisaAnne/lisa-caffe-public/tree/bilinear), specifically the "bilinear" branch.
