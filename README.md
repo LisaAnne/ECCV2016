@@ -20,7 +20,8 @@ Additionally, if you are interested in a pytorch version of this code, you can l
 ## Getting Started
 
 1.  Please clone my git repo.  You will need to use my version of [caffe](https://github.com/LisaAnne/lisa-caffe-public/tree/bilinear), specifically the "bilinear" branch.
-2.  Download data using the "download_data.sh" script.  This will also preprocess the CUB sentences.  All my ECCV 2016 models will be put in "gve_models"
+2.  ~Download data using the "download_data.sh" script.  This will also preprocess the CUB sentences.  All my ECCV 2016 models will be put in "gve_models"~
+2.  My website was deleted after I graduated, so you will have to download data from [here](https://drive.google.com/drive/u/1/folders/1nU9ATTLHAM6_jz-K6hoVlDzNrFcOXtyH).
 
 ## Building the models
 
